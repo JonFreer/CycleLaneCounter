@@ -1,0 +1,6 @@
+.env
+__pycache__
+cycle_tweet.log
+hourly.js
+hourly.json
+screenshot.png
