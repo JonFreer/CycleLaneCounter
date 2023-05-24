@@ -40,38 +40,6 @@ class API:
 
         return out
 
-
-    # def aggregate_results(results: Iterable[dict]) -> dict:
-
-    #     totals = defaultdict(dict)
-
-    #     for result in results:
-    #         name = result.get("Name")
-    #         counts = result.get("Counts", {}).get("kids", {})
-    #         if not name or not counts:
-    #             continue
-
-    #         for key, value in counts.items():
-    #             value = (value or "").strip()
-    #             if not value.isdigit():
-    #                 raise ValueError(value)
-    #             value = int(value)
-    #             totals[name][key] = totals[name].get(key, 0) + value
-
-    #     return totals
-
-
-    # def get_last_hour():
-    #     in_count, out_count = 0, 0
-    #     t = str(int(time.time()) - 3600)
-    #     all_results = get_results(t)
-    #     filtered_results = filter_results(all_results)
-    #     aggregates = aggregate_results(filtered_results)
-    #     for name, counts in aggregates.items():
-    #         print(f"{name} {counts.get('In', 0)} in {counts.get('Out', 0)} out")
-    #         in_count, out_count = counts.get('In', 0), counts.get('Out', 0)
-    #     return in_count, out_count
-
     def aggregate_hourly(data):
         hourly_total = []
         for i in range(24):

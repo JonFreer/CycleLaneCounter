@@ -24,18 +24,14 @@ def job():
         day_in, day_out = API.get_yesterday(os.environ["VIVACITY_KEY"])
         LOGGER.info("Called API. Yesterday totals are {} and {}".format(day_in, day_out))
 
-        # os.system("chromium --headless --disable-gpu --screenshot ./index.html --force-device-scale-factor=2 --window-size=1060,590")
+        os.system("chromium --headless --disable-gpu --screenshot ./index.html --force-device-scale-factor=2 --window-size=1060,590")
 
         time.sleep(10)
 
         post_on_twitter(day_in, day_out)
 
     except Exception as e:
-        # print(e)
-        # f = open("cycle_log.txt", "a")
-        # f.write("\nNew Error")
-        # f.write(str(e))
-        # f.close()
+
         LOGGER.error(str(e))
 
 
