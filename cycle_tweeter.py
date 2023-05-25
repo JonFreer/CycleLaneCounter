@@ -45,7 +45,7 @@ def post_on_twitter(day_in, day_out):
     twitterMedia.upload_append()
     twitterMedia.upload_finalize()
 
-    tweet = "Yesterday, there were {} people cycling on the ~A38Cycleway. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
+    tweet = "Yesterday, more than {} people were cycling on the ~A38Cycleway. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
 
     response = client.create_tweet(text=tweet, media_ids=[twitterMedia.media_id])
 
@@ -85,10 +85,6 @@ if __name__ == '__main__':
                    resource_owner_secret=os.environ["ACCESS_TOKEN_SECRET"])
     
 
-    # print( os.environ["CONSUMER_KEY"],
-    #                os.environ["CONSUMER_SECRET"],
-    #                os.environ["ACCESS_TOKEN"],
-    #                os.environ["ACCESS_TOKEN_SECRET"])
     job()
 
     # # Schedule the job to run once an hour
