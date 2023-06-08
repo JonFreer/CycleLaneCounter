@@ -165,7 +165,6 @@
         document.getElementById("sum_out").innerHTML = hourly_out.reduce((a, b) => a + b)
 
         let date = new Date(day * 1000);
-        console.log(day, date.getDay())
         document.getElementById("date").innerHTML =
             `${date.toLocaleDateString('en-UK', {weekday: "long"})} ${date.toLocaleDateString('en-UK')}`;
 

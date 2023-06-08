@@ -6,7 +6,7 @@ class API:
 
     # Call and return the json from the Vivacity API
     def get_results(api_key,start_time, end_time):
-        response = requests.get("https://tfwm.onl/vivacity.json?ApiKey={}&earliest={}&latest={}&name=L48_Bristol_rd_cyclepath_wm5g001&class=cyclist&NullDataPoints=false&to=1684840206".format(api_key,start_time,end_time))
+        response = requests.get("https://tfwm.onl/vivacity.json?ApiKey={}&earliest={}&latest={}&Identity=40934&class=cyclist&NullDataPoints=false&to=1684840206".format(api_key,start_time,end_time))
         response.raise_for_status()
         return response.json()
 
