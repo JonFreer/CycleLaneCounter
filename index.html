@@ -165,9 +165,9 @@
         document.getElementById("sum_out").innerHTML = hourly_out.reduce((a, b) => a + b)
 
         let date = new Date(day * 1000);
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         console.log(day, date.getDay())
-        document.getElementById("date").innerHTML = days[date.getDay()] + " " + date.toLocaleDateString('en-UK');
+        document.getElementById("date").innerHTML =
+            `${date.toLocaleDateString('en-UK', {weekday: "long"})} ${date.toLocaleDateString('en-UK')}`;
 
         const labels = ["1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM",
             "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM"];
