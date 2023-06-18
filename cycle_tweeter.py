@@ -2,7 +2,7 @@
 
 # nohup python3 cycle_tweeter.py &
 # ps ax | grep cycle_tweeter.py
-
+import argparse
 from collections import defaultdict
 from typing import Generator, Iterable
 from multiprocessing import current_process
@@ -13,29 +13,29 @@ from twitter_media import TwitterMedia
 import logging
 import time
 import os
-import schedule
 import tweepy
 
 from requests_oauthlib import OAuth1
 
-def job():
+def job(opt):
     try:
         LOGGER.info("Calling API")
-        day_in, day_out = API.get_yesterday(os.environ["VIVACITY_KEY"])
-        LOGGER.info("Called API. Yesterday totals are {} and {}".format(day_in, day_out))
+        day_in, day_out = API.get_yesterday(os.environ["VIVACITY_KEY"],opt.counter)
+
+        LOGGER.info("Called API. Yesterday totals are {} and {} for counter {}".format(day_in, day_out,opt.counter))
 
         os.system("chromium --headless --disable-gpu --screenshot ./index.html --force-device-scale-factor=2 --window-size=1060,590")
 
         time.sleep(10)
 
-        post_on_twitter(day_in, day_out)
+        post_on_twitter(day_in, day_out,opt.counter)
 
     except Exception as e:
 
         LOGGER.error(str(e))
 
 
-def post_on_twitter(day_in, day_out):
+def post_on_twitter(day_in, day_out,identity):
 
     FILENAME = 'screenshot.png'
     MEDIA_CATEGORY = 'tweet_image'
@@ -44,13 +44,21 @@ def post_on_twitter(day_in, day_out):
     twitterMedia.upload_init()
     twitterMedia.upload_append()
     twitterMedia.upload_finalize()
-
-    tweet = "Yesterday, more than {} people were cycling on the ~A38Cycleway. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
-
+    if(identity==40934):
+        tweet = "Yesterday, more than {} people were cycling on the @A38Cycleway at the Sir Harry's Road counter. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
+    if(identity==41238):
+        tweet = "Yesterday, more than {} people were cycling on the @A38Cycleway at the University South Gate counter. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
+    if(identity==40925):
+        tweet = "Yesterday, more than {} people were cycling on the @A38Cycleway at the Harborne Lane counter. {} headed into the city, {} headed towards Selly Oak.".format(day_in + day_out,day_in,day_out)
+    
     response = client.create_tweet(text=tweet, media_ids=[twitterMedia.media_id])
 
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--counter', type=int, default=None, required=True, help = "The vivacity identnity of the counter")
+    opt = parser.parse_args()
 
     ### Set up logging
     # Create logger with 'spam_application'
@@ -85,12 +93,4 @@ if __name__ == '__main__':
                    resource_owner_secret=os.environ["ACCESS_TOKEN_SECRET"])
     
 
-    job()
-
-    # # Schedule the job to run once an hour
-    # schedule.every().hour.at(":01").do(job)
-
-    # # Loop to run job
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(10)
+    job(opt)

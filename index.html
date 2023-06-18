@@ -139,7 +139,7 @@
 
         <div id="topBar">
             <span id="date">Tuesday 23/05/2023</span>
-            <span class="bottomBar"> &nbsp &nbsp &nbsp Sir Harry's Road counter</span>
+            <span id ="counterName" class="bottomBar"></span>
             <div id="at">
                 <span class="bottomBar"> Data courtesy of BCC &nbsp &nbsp &nbsp</span>
                 <span> @A38Cycleway </span>
@@ -167,6 +167,20 @@
         let date = new Date(day * 1000);
         document.getElementById("date").innerHTML =
             `${date.toLocaleDateString('en-UK', {weekday: "long"})} ${date.toLocaleDateString('en-UK')}`;
+
+
+        counter_name = document.getElementById("counterName");
+        console.log(identity)
+
+        if(identity == 40934){
+            counter_name.innerHTML = "&nbsp &nbsp &nbsp Sir Harry's Road counter"
+        }
+        if(identity == 41238){
+            counter_name.innerHTML = "&nbsp &nbsp &nbsp University South Gate counter"
+        }
+        if(identity == 40925){
+            counter_name.innerHTML = "&nbsp &nbsp &nbsp Harborne Lane counter"
+        }
 
         const labels = ["1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM",
             "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM"];

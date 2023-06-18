@@ -5,11 +5,10 @@ import json
 class API:
 
     # Call and return the json from the Vivacity API
-    def get_results(api_key,start_time, end_time):
-        response = requests.get("https://tfwm.onl/vivacity.json?ApiKey={}&earliest={}&latest={}&Identity=40934&class=cyclist&NullDataPoints=false&to=1684840206".format(api_key,start_time,end_time))
+    def get_results(api_key,start_time, end_time,identity):
+        response = requests.get("https://tfwm.onl/vivacity.json?ApiKey={}&earliest={}&latest={}&Identity={}&class=cyclist&NullDataPoints=false".format(api_key,start_time,end_time,identity))
         response.raise_for_status()
         return response.json()
-
 
     def filter_results(results: dict):
 
@@ -60,7 +59,7 @@ class API:
         return in_count, out_count
     
     # Output the data to json and js
-    def output_data(data,date):
+    def output_data(data,date,identity):
         with open('hourly.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
@@ -71,8 +70,8 @@ class API:
             f.write(hourly_json)
             f.write("\nday = ")
             f.write(date)
-
-
+            f.write("\nidentity = ")
+            f.write(str(identity))
 
     # Get todays daily total
     def get_today(api_key):
@@ -88,18 +87,18 @@ class API:
         return in_count, out_count
 
 
-    def get_yesterday(api_key):
+    def get_yesterday(api_key,identity):
 
         # Get the start time and end time as unix timestamp
         now = datetime.datetime.now()
         end = int(now.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
         start = end - (24*60*60)
 
-        all_results = API.get_results(api_key,start, end)
+        all_results = API.get_results(api_key,start, end,identity)
         filtered_results = API.filter_results(all_results)
         hourly_total = API.aggregate_hourly(filtered_results)
 
-        API.output_data(hourly_total,str(int(datetime.datetime.now().timestamp()) - (24*60*60)))
+        API.output_data(hourly_total,str(int(datetime.datetime.now().timestamp()) - (24*60*60)),identity)
 
         in_count, out_count = API.get_total(filtered_results)
 
